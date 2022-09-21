@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "890391628624",
+    "project_id": "track-car-f8524",
+    "storage_bucket": "track-car-f8524.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:890391628624:android:3d4592149f950337a3ba55",
+        "android_client_info": {
+          "package_name": "com.example.mvvm_project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "890391628624-3lv9q159q92ibd98ja7hvvn3pg5jlk11.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7LdVK8WCTBmkRtUEZaBQWNAsU_jH9HYU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "890391628624-3lv9q159q92ibd98ja7hvvn3pg5jlk11.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
