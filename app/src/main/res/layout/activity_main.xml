@@ -7,7 +7,7 @@
 
         <variable
             name="item"
-            type="com.example.mvvm_project.model.Student" />
+            type="com.example.mvvm_project.viewmodel.MyViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -19,10 +19,12 @@
             android:id="@+id/name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@{item.name}"
             android:textSize="20sp"
-            android:hint="Name"
+            android:hint="Driver"
             android:gravity="center"
+            android:text="@{item.student.driver}"
+            android:background="#EC8484"
+            android:onClick="@{()->item.aDriver()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -32,10 +34,12 @@
             android:id="@+id/fatherName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Father Name"
-            android:text="@{item.fatherName}"
+            android:hint="Student"
             android:textSize="20sp"
+            android:text="@{item.student.student}"
             android:gravity="center"
+            android:background="#EC8484"
+            android:onClick="@{()->item.aStudent()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"

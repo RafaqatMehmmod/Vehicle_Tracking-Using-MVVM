@@ -1,10 +1,14 @@
 package com.example.mvvm_project.viewmodel;
 
 import android.app.Application;
+import android.content.Context;
+import android.content.Intent;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 
+import com.example.mvvm_project.activities.RegisterActivity;
+import com.example.mvvm_project.model.OptionModel;
 import com.example.mvvm_project.model.Student;
 
 /**
@@ -15,14 +19,32 @@ import com.example.mvvm_project.model.Student;
 public class MyViewModel extends AndroidViewModel {
 
 
-    Student student;
-    public MyViewModel(@NonNull Application application) {
+    OptionModel optionModel;
+    Context context;
+    public MyViewModel(Application application) {
         super(application);
-        student=new Student("Rafaqat Mehmood","Arshad Mehmood");
+        optionModel=new OptionModel("As a Driver ","As a Student");
+        this.context=application;
     }
 
 
-    public Student getStudent() {
-        return this.student;
+    public OptionModel getStudent() {
+        return this.optionModel;
+    }
+
+    public void aDriver()
+    {
+        commonFun("Driver");
+    }
+    public void aStudent()
+    {
+        commonFun("Student");
+    }
+
+    private void commonFun(String s)
+    {
+        Intent intent=new Intent(context, RegisterActivity.class);
+        intent.putExtra("key",s);
+        context.startActivity(intent);
     }
 }

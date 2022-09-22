@@ -5,6 +5,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
+import android.os.Handler;
 
 import com.example.mvvm_project.databinding.ActivityMainBinding;
 import com.example.mvvm_project.model.Student;
@@ -21,7 +22,10 @@ public class MainActivity extends AppCompatActivity {
 
 
         myViewModel=new ViewModelProvider(this, (ViewModelProvider.Factory) ViewModelProvider.AndroidViewModelFactory.getInstance(this.getApplication())).get(MyViewModel.class);
-        binding.setItem(myViewModel.getStudent());
+//        binding.setItem(myViewModel.getStudent());
+        binding.setItem(myViewModel);
+
+
 
     }
 }
