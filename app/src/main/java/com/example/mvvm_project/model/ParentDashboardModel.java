@@ -4,17 +4,15 @@ import android.widget.ImageView;
 
 import androidx.databinding.BindingAdapter;
 
-public class SplashModel {
+public class ParentDashboardModel {
+    int title;
 
-    private int title;
-    private int logo;
-
-    public SplashModel(int title, int logo) {
+    public ParentDashboardModel(int title, int logo) {
         this.title = title;
         this.logo = logo;
     }
 
-    public SplashModel() {
+    public ParentDashboardModel() {
     }
 
     public int getTitle() {
@@ -23,9 +21,7 @@ public class SplashModel {
 
     public void setTitle(int title) {
         this.title = title;
-
     }
-
 
     public int getLogo() {
         return logo;
@@ -35,9 +31,11 @@ public class SplashModel {
         this.logo = logo;
     }
 
+    int logo;
+
 
     //NWImgNS
-    @BindingAdapter({"android:src"})
+    @BindingAdapter({"android:parentDashboard"})
     public static void setImageViewResource(ImageView imageView, int resource) {
         imageView.setImageResource(resource);
     }

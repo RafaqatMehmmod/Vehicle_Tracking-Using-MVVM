@@ -5,10 +5,8 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
-import android.os.Handler;
 
 import com.example.mvvm_project.databinding.ActivityMainBinding;
-import com.example.mvvm_project.model.Student;
 import com.example.mvvm_project.viewmodel.MyViewModel;
 
 public class MainActivity extends AppCompatActivity {

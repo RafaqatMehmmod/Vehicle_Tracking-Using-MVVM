@@ -4,16 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="item"
-            type="com.example.mvvm_project.viewmodel.SplashViewModel" />
+            type="com.example.mvvm_project.viewmodel.RegisterViewModel" />
     </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:background="@color/white"
         android:layout_height="match_parent"
-        tools:context=".activities.Splash">
-
+        android:background="@color/white"
+        tools:context=".activities.DriverDashboard">
 
         <TextView
             android:id="@+id/appName"
@@ -34,18 +35,32 @@
 
         </TextView>
 
+        <androidx.appcompat.widget.SwitchCompat
+            android:layout_width="@dimen/_90sdp"
+            android:layout_height="wrap_content"
+            android:text="ON"
+            android:textOff="OFF"
+            android:thumb="@drawable/thumb"
+            app:layout_constraintBottom_toTopOf="@id/appLogo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/appName"
+            app:showText="true"
+            app:track="@drawable/track">
+
+        </androidx.appcompat.widget.SwitchCompat>
+
         <ImageView
+            android:id="@+id/appLogo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:src="@{item.model.logo}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/appName"
-            android:src="@{item.model.logo}"
             app:layout_constraintVertical_bias="1.0">
 
         </ImageView>
-<!--        item.model.logo,default=@drawable/ic_launcher_background-->
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

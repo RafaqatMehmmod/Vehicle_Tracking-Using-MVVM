@@ -4,12 +4,11 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 
-import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 
+import com.example.mvvm_project.R;
 import com.example.mvvm_project.activities.RegisterActivity;
 import com.example.mvvm_project.model.OptionModel;
-import com.example.mvvm_project.model.Student;
 
 /**
  * Created by Rafaqat Mehmood
@@ -23,7 +22,7 @@ public class MyViewModel extends AndroidViewModel {
     Context context;
     public MyViewModel(Application application) {
         super(application);
-        optionModel=new OptionModel("As a Driver ","As a Student");
+        optionModel=new OptionModel(R.string.driver_title,R.string.parent_title, R.string.app_title,R.drawable.logo);
         this.context=application;
     }
 
@@ -38,12 +37,13 @@ public class MyViewModel extends AndroidViewModel {
     }
     public void aStudent()
     {
-        commonFun("Student");
+        commonFun("Parent");
     }
 
     private void commonFun(String s)
     {
         Intent intent=new Intent(context, RegisterActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("key",s);
         context.startActivity(intent);
     }

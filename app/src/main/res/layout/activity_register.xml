@@ -5,12 +5,164 @@
 
     <data>
 
+        <variable
+            name="item"
+            type="com.example.mvvm_project.viewmodel.RegisterViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/white"
         tools:context=".activities.RegisterActivity">
 
+        <TextView
+            android:id="@+id/appName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:hint="@string/app_title"
+            android:text="@{item.model.title}"
+            android:textColor="@color/appColor"
+            android:textColorHint="@color/appColor"
+            android:textSize="@dimen/_21ssp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.072" />
+
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="@dimen/_90sdp"
+            android:layout_height="@dimen/_90sdp"
+            android:background="@drawable/driver_background"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/appName"
+            app:layout_constraintVertical_bias="0.01">
+
+        </View>
+
+        <ImageView
+            android:id="@+id/selected_image"
+            android:layout_width="@dimen/_70sdp"
+            android:layout_height="@dimen/_70sdp"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="@id/view"
+            app:layout_constraintEnd_toEndOf="@id/view"
+            android:onClick="@{()->item.selectImage()}"
+            app:layout_constraintStart_toStartOf="@+id/view"
+            app:layout_constraintTop_toTopOf="@id/view"
+            app:roundPercent="50">
+
+        </ImageView>
+
+        <EditText
+            android:id="@+id/edit_name"
+            android:layout_width="@dimen/_270sdp"
+            android:layout_height="@dimen/_45sdp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:hint="Name"
+            android:inputType="textPersonName"
+            android:paddingLeft="10dp"
+            android:textColor="@color/appColor"
+            android:background="@drawable/edit_text_background"
+            android:elevation="@dimen/_1sdp"
+            android:textColorHint="@color/appColor"
+            android:textSize="@dimen/_20ssp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/selected_image"
+            app:layout_constraintVertical_bias="0.0" />
+
+
+        <EditText
+            android:id="@+id/edit_schoolName"
+            android:layout_width="@dimen/_270sdp"
+            android:layout_height="@dimen/_45sdp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:hint="School Name"
+            android:inputType="textPersonName"
+            android:paddingLeft="10dp"
+            android:background="@drawable/edit_text_background"
+            android:elevation="@dimen/_1sdp"
+            android:textColor="@color/appColor"
+            android:textColorHint="@color/appColor"
+            android:textSize="@dimen/_20ssp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/edit_name"
+            app:layout_constraintStart_toStartOf="@id/edit_name"
+            app:layout_constraintTop_toBottomOf="@id/edit_name"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <EditText
+            android:id="@+id/edit_vehicleNo"
+            android:layout_width="@dimen/_270sdp"
+            android:layout_height="@dimen/_45sdp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:hint="Vehicle"
+            android:inputType="textPersonName"
+            android:paddingLeft="10dp"
+            android:textColor="@color/appColor"
+            android:textColorHint="@color/appColor"
+            android:textSize="@dimen/_20ssp"
+            android:textStyle="bold"
+            android:background="@drawable/edit_text_background"
+            android:elevation="@dimen/_1sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/edit_schoolName"
+            app:layout_constraintStart_toStartOf="@id/edit_schoolName"
+            app:layout_constraintTop_toBottomOf="@id/edit_schoolName"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/register"
+            android:layout_width="@dimen/_270sdp"
+            android:layout_height="@dimen/_45sdp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:hint="Register"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:textSize="@dimen/_20ssp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:onClick="@{()-> item.registerFun()}"
+            android:background="@drawable/button_background"
+            android:elevation="@dimen/_1sdp"
+            app:layout_constraintBottom_toTopOf="@id/appLogo"
+            app:layout_constraintEnd_toEndOf="@id/edit_vehicleNo"
+            app:layout_constraintStart_toStartOf="@id/edit_vehicleNo"
+            app:layout_constraintTop_toBottomOf="@id/edit_vehicleNo"
+            app:layout_constraintVertical_bias="0.1" />
+
+        <ImageView
+            android:id="@+id/appLogo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:img="@{item.model.logo}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/appName"
+            app:layout_constraintVertical_bias="1.0">
+
+        </ImageView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
