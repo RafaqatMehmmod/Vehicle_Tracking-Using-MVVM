@@ -36,11 +36,13 @@
         </TextView>
 
         <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/my_switch"
             android:layout_width="@dimen/_90sdp"
             android:layout_height="wrap_content"
             android:text="ON"
             android:textOff="OFF"
             android:thumb="@drawable/thumb"
+            android:onCheckedChanged="@{()->item.switchFun()}"
             app:layout_constraintBottom_toTopOf="@id/appLogo"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -62,5 +64,7 @@
             app:layout_constraintVertical_bias="1.0">
 
         </ImageView>
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

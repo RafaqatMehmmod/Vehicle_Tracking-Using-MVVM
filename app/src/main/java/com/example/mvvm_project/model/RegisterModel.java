@@ -19,6 +19,36 @@ public class RegisterModel {
     private String userName;
     private String userSchoolName;
     private String vehicleNo;
+    private String latitude;
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
+    private String longitude;
+
+
+    public String getUniqueName() {
+        return uniqueName;
+    }
+
+    public void setUniqueName(String uniqueName) {
+        this.uniqueName = uniqueName;
+    }
+
+    private String uniqueName;
 
     public int getLogo() {
         return logo;
@@ -30,13 +60,16 @@ public class RegisterModel {
 
     private int logo;
 
-    public RegisterModel(int title, int logo, String userProfile, String userName, String userSchoolName, String vehicleNo) {
+    public RegisterModel(int title, int logo, String userProfile, String userName, String userSchoolName, String vehicleNo,String uniqueName,String latitude,String longitude) {
         this.title = title;
         this.logo = logo;
         this.userProfile = userProfile;
         this.userName = userName;
         this.userSchoolName = userSchoolName;
         this.vehicleNo = vehicleNo;
+        this.uniqueName=uniqueName;
+        this.latitude=latitude;
+        this.longitude=longitude;
     }
 
 

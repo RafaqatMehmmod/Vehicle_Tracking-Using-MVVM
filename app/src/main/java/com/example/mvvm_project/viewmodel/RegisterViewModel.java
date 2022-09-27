@@ -1,5 +1,8 @@
 package com.example.mvvm_project.viewmodel;
 
+import static com.example.mvvm_project.activities.DriverDashboard.driverDashboardBinding;
+import static com.example.mvvm_project.activities.DriverDashboard.latitude;
+import static com.example.mvvm_project.activities.DriverDashboard.longitude;
 import static com.example.mvvm_project.activities.RegisterActivity.binding;
 import static com.example.mvvm_project.activities.RegisterActivity.dialog;
 import static com.example.mvvm_project.activities.RegisterActivity.imgUri;
@@ -7,43 +10,51 @@ import static com.example.mvvm_project.activities.RegisterActivity.picImage;
 import static com.example.mvvm_project.constant.Constant.DRIVER;
 import static com.example.mvvm_project.constant.Constant.MY_TAG;
 import static com.example.mvvm_project.constant.Constant.REGISTER_DRIVER;
+import static com.example.mvvm_project.service.RepeatingThread.keepRunning;
 
+import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
+import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.AndroidViewModel;
 
 import com.example.mvvm_project.Firebase_Initialize;
 import com.example.mvvm_project.R;
 import com.example.mvvm_project.activities.DriverDashboard;
 import com.example.mvvm_project.model.RegisterModel;
+import com.example.mvvm_project.service.LocationService;
+import com.example.mvvm_project.service.RepeatingThread;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 public class RegisterViewModel extends AndroidViewModel {
-
-
     RegisterModel model;
     Context context;
-    Firebase_Initialize obj;
-
-
+    public static Firebase_Initialize obj;
+    public static Runnable runnable;
+    public static Handler mHandler = new Handler();
+    String name,schoolName,vehicleNo;
 
     public RegisterViewModel(@NonNull Application application) {
         super(application);
-        model = new RegisterModel(R.string.app_title, R.drawable.logo, "bitmap.toString()", "Mehmood", "Awan", "dn38");
+        model = new RegisterModel(R.string.app_title, R.drawable.logo, "No Image", "No Name", "No Name", "No Name","No Name","No Name","Name");
         this.context = application;
         obj = Firebase_Initialize.getInstance();
+        Log.i(MY_TAG, "RegisterViewModel: ");
 
 
     }
+
 
     public RegisterModel getModel() {
         return model;
@@ -54,12 +65,11 @@ public class RegisterViewModel extends AndroidViewModel {
 
     }
 
-
     public void registerFun() {
 
-        String name = binding.editName.getText().toString();
-        String schoolName = binding.editSchoolName.getText().toString();
-        String veh = binding.editVehicleNo.getText().toString();
+        name = binding.editName.getText().toString();
+        schoolName = binding.editSchoolName.getText().toString();
+        vehicleNo = binding.editVehicleNo.getText().toString();
 
         if (imgUri == null) {
             Toast.makeText(context, "Select Img", Toast.LENGTH_SHORT).show();
@@ -67,13 +77,13 @@ public class RegisterViewModel extends AndroidViewModel {
             Toast.makeText(context, "Name", Toast.LENGTH_SHORT).show();
         } else if (schoolName.isEmpty()) {
             Toast.makeText(context, "School Name", Toast.LENGTH_SHORT).show();
-        } else if (veh.isEmpty()) {
+        } else if (vehicleNo.isEmpty()) {
             Toast.makeText(context, "Vehicle No", Toast.LENGTH_SHORT).show();
         } else {
 //            dialog=new ProgressDialog(context.getApplicationContext());
             dialog.show();
             dialog.setTitle("Upload Record");
-            StorageReference ref=obj.getStorageReference().getReference().child(REGISTER_DRIVER).child(name+"-"+veh);
+            StorageReference ref = obj.getStorageReference().getReference().child(REGISTER_DRIVER).child(name + "-" + vehicleNo);
             ref.putFile(imgUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -83,14 +93,15 @@ public class RegisterViewModel extends AndroidViewModel {
                             model.setUserProfile(uri.toString());
                             model.setUserName(name);
                             model.setUserSchoolName(schoolName);
-                            model.setVehicleNo(veh);
-                            obj.getFirebaseDatabase().getReference().child(DRIVER).child(name + "-" + veh).setValue(model);
+                            model.setVehicleNo(vehicleNo);
+                            model.setUniqueName(name+"-"+vehicleNo);
+                            obj.getFirebaseDatabase().getReference().child(DRIVER).child(name + "-" + vehicleNo).setValue(model);
                             dialog.dismiss();
                             nextActivity();
                             Log.i(MY_TAG, "registerFun: " + imgUri);
                             Log.i(MY_TAG, "registerFun: " + name);
                             Log.i(MY_TAG, "registerFun: " + schoolName);
-                            Log.i(MY_TAG, "registerFun: " + veh);
+                            Log.i(MY_TAG, "registerFun: " + vehicleNo);
                         }
                     });
                 }
@@ -107,11 +118,46 @@ public class RegisterViewModel extends AndroidViewModel {
         }
     }
 
-    private void nextActivity()
-    {
-        Intent intent=new Intent(context, DriverDashboard.class);
+    private void nextActivity() {
+        Intent intent = new Intent(context, DriverDashboard.class);
+        intent.putExtra("uniqueName",name+"-"+vehicleNo);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
+
+
+    public void switchFun() {
+
+        if (driverDashboardBinding.mySwitch.isChecked()) {
+            Log.i(MY_TAG, "RegisterViewModel..........ON.......: ");
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                keepRunning = true;
+                ContextCompat.startForegroundService(context, new Intent(context, LocationService.class));
+                Log.i(MY_TAG, "switchFun: " + latitude + "-" + longitude);
+            } else {
+                keepRunning = true;
+                context.startService(new Intent(context, LocationService.class));
+            }
+
+        } else {
+
+            context.stopService(new Intent(context, LocationService.class));
+            RepeatingThread.stopThread();
+
+
+        }
+
+    }
+
+    public boolean isMyServiceRunning(Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager)context.getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
 }
