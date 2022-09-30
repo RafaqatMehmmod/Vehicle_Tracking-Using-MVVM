@@ -1,6 +1,5 @@
 package com.example.mvvm_project.activities;
 
-
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
@@ -23,9 +22,8 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.mvvm_project.R;
-import com.example.mvvm_project.databinding.ActivityDriverDashboardBinding;
-import com.example.mvvm_project.service.LocationService;
-import com.example.mvvm_project.viewmodel.RegisterViewModel;
+import com.example.mvvm_project.databinding.ActivityParentTrackBinding;
+import com.example.mvvm_project.viewmodel.ParentDashboardViewModel;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.location.LocationCallback;
@@ -39,23 +37,23 @@ import com.google.android.gms.location.Priority;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
-public class DriverDashboard extends AppCompatActivity {
+public class ParentTrackActivity extends AppCompatActivity {
 
-    public static ActivityDriverDashboardBinding driverDashboardBinding;
-   public static RegisterViewModel registerViewModel;
-    private LocationRequest locationRequest;
-    public static double latitude,longitude;
+    public static ActivityParentTrackBinding parentTrackBinding;
+    ParentDashboardViewModel parentDashboardViewModel;
     public static String uniqueName;
+    private LocationRequest locationRequest;
+    public static double p_latitude,p_longitude;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        driverDashboardBinding = DataBindingUtil.setContentView(this, R.layout.activity_driver_dashboard);
+        parentTrackBinding= DataBindingUtil.setContentView(this ,R.layout.activity_parent_track);
 
-
-        registerViewModel = new ViewModelProvider(this, (ViewModelProvider.Factory) ViewModelProvider.AndroidViewModelFactory.getInstance(this.getApplication())).get(RegisterViewModel.class);
-        driverDashboardBinding.setItem(registerViewModel);
+        parentDashboardViewModel=new ViewModelProvider(this, (ViewModelProvider.Factory) ViewModelProvider.AndroidViewModelFactory.getInstance(this.getApplication())).get(ParentDashboardViewModel.class);
+        parentTrackBinding.setItem(parentDashboardViewModel);
 
         uniqueName = getIntent().getStringExtra("uniqueName");
+        Toast.makeText(this, ""+uniqueName, Toast.LENGTH_SHORT).show();
 
         SharedPreferences sharedPreferences = getSharedPreferences("db", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -70,23 +68,9 @@ public class DriverDashboard extends AppCompatActivity {
 
 
         getCurrentLocation();
-        Toast.makeText(this, "" + uniqueName, Toast.LENGTH_SHORT).show();
-       // startAlert();
-
-//        Intent myIntent = new Intent();
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//            myIntent.setAction(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS);
-//        }
-//        startActivity(myIntent);
-
-        if (registerViewModel.isMyServiceRunning(LocationService.class)) {
-            driverDashboardBinding.mySwitch.setChecked(true);
-        } else {
-            driverDashboardBinding.mySwitch.setChecked(false);
-        }
-
-
     }
+
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -123,7 +107,7 @@ public class DriverDashboard extends AppCompatActivity {
     public void getCurrentLocation() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (ActivityCompat.checkSelfPermission(DriverDashboard.this,
+            if (ActivityCompat.checkSelfPermission(ParentTrackActivity.this,
                     Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 
                 if (isGPSEnabled()) {
@@ -145,8 +129,6 @@ public class DriverDashboard extends AppCompatActivity {
 
     private void turnOnGPS() {
 
-
-
         LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
                 .addLocationRequest(locationRequest);
         builder.setAlwaysShow(true);
@@ -160,7 +142,7 @@ public class DriverDashboard extends AppCompatActivity {
 
                 try {
                     LocationSettingsResponse response = task.getResult(ApiException.class);
-                    Toast.makeText(DriverDashboard.this, "GPS is already tured on", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ParentTrackActivity.this, "GPS is already tured on", Toast.LENGTH_SHORT).show();
 
                 } catch (ApiException e) {
 
@@ -169,7 +151,7 @@ public class DriverDashboard extends AppCompatActivity {
 
                             try {
                                 ResolvableApiException resolvableApiException = (ResolvableApiException) e;
-                                resolvableApiException.startResolutionForResult(DriverDashboard.this, 2);
+                                resolvableApiException.startResolutionForResult(ParentTrackActivity.this, 2);
                             } catch (IntentSender.SendIntentException ex) {
                                 ex.printStackTrace();
                             }
@@ -203,23 +185,10 @@ public class DriverDashboard extends AppCompatActivity {
         public void onLocationResult(@NonNull LocationResult locationResult) {
             super.onLocationResult(locationResult);
             if (locationResult != null && locationResult.getLastLocation() != null) {
-                latitude = locationResult.getLastLocation().getLatitude();
-                longitude = locationResult.getLastLocation().getLongitude();
-                Log.d("Location", latitude + "," + longitude);
+                p_latitude = locationResult.getLastLocation().getLatitude();
+                p_longitude = locationResult.getLastLocation().getLongitude();
+                Log.d("Location", p_latitude + "," + p_longitude);
             }
         }
     };
-
-
-
-//    public void startAlert() {
-//        int i = 5;
-//        Intent intent = new Intent(this, RestartReceiver.class);
-//        PendingIntent pendingIntent = PendingIntent.getBroadcast(
-//                this.getApplicationContext(), 234324243, intent, 0);
-//        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-//        alarmManager.setRepeating(AlarmManager.RTC, System.currentTimeMillis(),
-//                1000 * 5, pendingIntent);
-//        Toast.makeText(this, "Alarm set in " + i + " seconds",Toast.LENGTH_LONG).show();
-//    }
 }

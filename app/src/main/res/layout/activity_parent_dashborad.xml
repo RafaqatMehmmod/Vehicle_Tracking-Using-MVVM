@@ -15,35 +15,48 @@
         android:background="@color/white"
         tools:context=".activities.ParentDashboard">
 
-        <TextView
-            android:id="@+id/appName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="@string/app_title"
-            android:text="@{item.parentDashboardModel.title}"
-            android:textColor="@color/appColor"
-            android:textColorHint="@color/appColor"
-            android:textSize="@dimen/_21ssp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
+<!--        <TextView-->
+<!--            android:id="@+id/appName"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:hint="@string/app_title"-->
+<!--            android:text="@{item.parentDashboardModel.title}"-->
+<!--            android:textColor="@color/appColor"-->
+<!--            android:textColorHint="@color/appColor"-->
+<!--            android:textSize="@dimen/_21ssp"-->
+<!--            android:textStyle="bold"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintHorizontal_bias="0.497"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            app:layout_constraintVertical_bias="0.116">-->
+
+<!--        </TextView>-->
+
+
+
+        <WebView
+            android:id="@+id/webview"
+            android:layout_width="match_parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.116">
-
-        </TextView>
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/appName"
-            android:src="@{item.parentDashboardModel.logo}"
-            app:layout_constraintVertical_bias="1.0">
+            android:layout_height="match_parent">
 
-        </ImageView>
+        </WebView>
+<!--        <ImageView-->
+<!--            android:id="@+id/appLogo"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/appName"-->
+<!--            android:src="@{item.parentDashboardModel.logo}"-->
+<!--            app:layout_constraintVertical_bias="1.0">-->
+
+<!--        </ImageView>-->
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

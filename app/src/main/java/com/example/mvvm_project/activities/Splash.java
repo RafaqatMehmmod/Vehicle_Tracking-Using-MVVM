@@ -50,7 +50,8 @@ public class Splash extends AppCompatActivity {
                     Log.i("mehmood", "onCreate++++++++++: " + k);
                 } else if (k.equals("Parent")) {
 
-                    Intent intent = new Intent(Splash.this, ParentDashboard.class);
+                    Intent intent = new Intent(Splash.this, ParentTrackActivity.class);
+                    intent.putExtra("uniqueName",driverUniqueName);
                     startActivity(intent);
                     finish();
                     Log.i("mehmood", "onCreate++++++++++: " + k);

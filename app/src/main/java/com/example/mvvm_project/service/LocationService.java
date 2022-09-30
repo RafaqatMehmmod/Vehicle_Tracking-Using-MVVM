@@ -8,6 +8,7 @@ import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.IBinder;
 import android.util.Log;
 import android.widget.Toast;
@@ -17,11 +18,23 @@ import androidx.core.app.NotificationCompat;
 
 import com.example.mvvm_project.R;
 import com.example.mvvm_project.activities.DriverDashboard;
+import com.example.mvvm_project.receiver.RestartReceiver;
 
 public class LocationService extends Service {
     Notification notification;
 
     public static Thread t;
+
+    RestartReceiver restartReceiver;
+
+    @Override
+    public void onCreate() {
+        restartReceiver=new RestartReceiver();
+        IntentFilter intentFilter=new IntentFilter();
+        intentFilter.addAction(Intent.ACTION_PACKAGE_RESTARTED);
+        registerReceiver(restartReceiver,intentFilter);
+        super.onCreate();
+    }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -57,6 +70,7 @@ public class LocationService extends Service {
         startForeground(1,notification);
         t = new Thread(new RepeatingThread());
         t.start();
+
         Toast.makeText(getApplicationContext(), "Start Service ", Toast.LENGTH_SHORT).show();
     }
 
@@ -70,6 +84,7 @@ public class LocationService extends Service {
     public void onDestroy() {
         super.onDestroy();
         Log.i(MY_TAG, "onDestroy: ");
+        sendBroadcast(new Intent("YouWillNeverKillMe"));
     }
 
 

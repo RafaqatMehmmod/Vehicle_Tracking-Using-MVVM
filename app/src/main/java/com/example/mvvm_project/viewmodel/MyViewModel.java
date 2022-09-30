@@ -20,6 +20,8 @@ public class MyViewModel extends AndroidViewModel {
 
     OptionModel optionModel;
     Context context;
+
+
     public MyViewModel(Application application) {
         super(application);
         optionModel=new OptionModel(R.string.driver_title,R.string.parent_title, R.string.app_title,R.drawable.logo);
@@ -46,5 +48,8 @@ public class MyViewModel extends AndroidViewModel {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("key",s);
         context.startActivity(intent);
+
+
+
     }
 }
