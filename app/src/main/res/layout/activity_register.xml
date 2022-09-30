@@ -49,7 +49,8 @@
 
         </View>
 
-        <ImageView
+
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/selected_image"
             android:layout_width="@dimen/_70sdp"
             android:layout_height="@dimen/_70sdp"
@@ -59,9 +60,10 @@
             android:onClick="@{()->item.selectImage()}"
             app:layout_constraintStart_toStartOf="@+id/view"
             app:layout_constraintTop_toTopOf="@id/view"
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
             app:roundPercent="50">
 
-        </ImageView>
+        </com.google.android.material.imageview.ShapeableImageView>
 
         <EditText
             android:id="@+id/edit_name"
