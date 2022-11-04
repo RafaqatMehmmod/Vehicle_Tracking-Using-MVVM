@@ -56,8 +56,9 @@ public class LocationService extends Service {
                     .setSmallIcon(R.drawable.logo)
                     .setContentIntent(pendingIntent)
                     .setCategory(Notification.CATEGORY_SERVICE)
+                    .setOnlyAlertOnce(true)
                     .build();
-            manager.notify(12, notification);
+           
        // }
 //        else{
 //            notification = new NotificationCompat.Builder(this, LOCATION_CHANNEL)
